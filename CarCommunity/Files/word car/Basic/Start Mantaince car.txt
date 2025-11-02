@@ -1,0 +1,22 @@
+تاسكات الاسبوع الاول تبدأ من الغد:
+١- System Analysis كامل لكل ال Features الذي سيتم تطبيقها ف المشروع (بالتنسيق مع كل افراد التيم ف الاجتماع المجمع)
+التحليل لازم يكون ملف وورد واضح لان بيتم تسليمه يوم المناقشه وبنتابع منه تطور المشروع بشكل كامل كما هو مطلوب
+
+٢- EERD & Mapping 
+٣- Implement DB using SQL OR EF core
+لو اشتغلنا DB First نعمل scaffold طبعا للمشروع
+٤- Add Repository Design Pattern to the Project
+Add Authentication
+
+عايزين نجتمع ياشباب عشان نشوف الdoc وباقي الحاجات
+System analysis
+
+Car Maintenance asp 9 + angular 18 as community site + 
+i need to start with asp api for Maintenance Car now i need full structure for this +System analysis +Repository Design Pattern +Implement DB using EF core+EERD & Mapping +all Features + docs word file for all of this +as community web site + Expand AI Agent + api external for last news + security + Expand role-based scenarios + benfites from this + some problems + some services +Integrate OAuth for auth + add layer test + add layer  docs files Docs: Swagger + Markdown + Word Export + split project as inter structure for all layer artitecher+ add docker+CI/CD Pipeline Implementation+تكامل مع أجهزة OBD-II+خدمة الصيانة التنبؤية
+
+خدمة التنبيهات الذكية
+خدمة التقارير الشاملة
+خدمة الدعم الفني
+خدمة تكامل الورش
+
+web application architecture as community web site for a Car Maintenance system using ASP.NET Core 9 + Angular 18, with full documentation, CI/CD, Docker, security, AI integrations, external APIs, testing, and layered architecture. I can provide a comprehensive blueprint with structure, design patterns, and implementation plan, including all layers, features, and documentation strategy.

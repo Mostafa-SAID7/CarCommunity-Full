@@ -1,0 +1,3 @@
+External Integrations / Services   │
+          │   - SMS/Email (Twilio, SendGrid)     │
+          │   - Payment Gateway (Stripe / Tap)   │

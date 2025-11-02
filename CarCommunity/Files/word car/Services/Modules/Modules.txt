@@ -1,0 +1,33 @@
+🧩 Project Modules
+Module	Description
+1. Authentication	Login/Registration for Admin, Mechanic, and Customer.
+2. Vehicle Management	Add/Edit/Delete vehicles with details (model, brand, year, owner).
+3. Maintenance Scheduling	Create and manage maintenance appointments.
+4. Service History	Record completed services and parts used.
+5. Billing & Invoices	Generate invoices after maintenance completion.
+6. Reports	View statistics (services per month, revenue, etc.).
+
+
+💬 4. الوحدات التفاعلية الأساسية (Core Modules)
+🔸 1. المنتدى الفني (Garage Talk)
+•	أسئلة وأجوبة مصنفة حسب نوع السيارة والمشكلة
+•	تصويت لأفضل الحلول
+•	فلترة حسب المدينة أو الموديل
+🔸 2. نادي السيارات (Car Clubs)
+•	غرف منفصلة لكل نوع سيارة (تويوتا، هيونداي، BMW، الخ)
+•	منشورات، مسابقات، ومقاطع فيديو
+•	منافسات بين الأندية
+🔸 3. ورشة المعرفة (Knowledge Hub)
+•	مقالات، فيديوهات، شروحات
+•	بحث ذكي حسب نوع السيارة أو الكود
+•	إمكانية الحفظ أو الإعجاب
+🔸 4. سوق الورش (Smart Workshop Marketplace)
+•	بحث ذكي عن ورش موثوقة
+•	نظام حجز ومتابعة مباشر
+•	تقييم وتوصية من المجتمع
+🔸 5. الفعاليات والتحديات (Events & Challenges)
+•	مسابقات صيانة شهرية
+•	ورش عمل أونلاين
+•	لقاءات حية مع خبراء السيارات
+________________________________________
+

@@ -1,0 +1,9 @@
+🏗️ Tech Stack
+Layer	Technology
+Frontend	ASP.NET Razor Pages or ASP.NET MVC, Bootstrap, jQuery
+Backend	ASP.NET Core 7 or 8
+Database	SQL Server / SQLite
+ORM	Entity Framework Core
+Authentication	ASP.NET Identity
+Reports	RDLC or Syncfusion Reports (optional)
+
