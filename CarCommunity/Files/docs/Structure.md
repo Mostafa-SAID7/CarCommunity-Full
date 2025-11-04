@@ -1,10 +1,10 @@
-﻿AutoSphere — Full Feature Roadmap & Project Scope
+AutoSphere � Full Feature Roadmap & Project Scope
 
-Context: Production-grade feature specification and roadmap for AutoSphere — a car community platform built with ASP.NET Core Web API (backend) and Angular 17+ (frontend). This document expands on the "Future Enhancements" list (Realtime, Push, Gamification, 3D viewer, AI tagging) and provides a comprehensive, enterprise-ready feature set, architecture notes, API designs, database models, testing & observability checklist, and acceptance criteria.
+Context: Production-grade feature specification and roadmap for AutoSphere � a car community platform built with ASP.NET Core Web API (backend) and Angular 17+ (frontend). This document expands on the "Future Enhancements" list (Realtime, Push, Gamification, 3D viewer, AI tagging) and provides a comprehensive, enterprise-ready feature set, architecture notes, API designs, database models, testing & observability checklist, and acceptance criteria.
 
 Tone: pragmatic, enterprise-focused, scalable. Prioritize maintainability, testability, security, and production readiness.
 
-1. Feature Catalog — Core + Extended
+1. Feature Catalog � Core + Extended
 1.1 Core Platform (baseline, already delivered)
 
 User authentication & profile (JWT + ASP.NET Identity)
@@ -21,7 +21,7 @@ Responsive UI (Angular + Tailwind)
 
 1.2 Real-time & Engagement (enhancements)
 
-Real‑time Feed: SignalR hub for new posts, likes, and comments pushed to subscribers.
+Real?time Feed: SignalR hub for new posts, likes, and comments pushed to subscribers.
 
 Live Chat / Direct Messages: ephemeral 1:1 or group chats using SignalR (encrypted in transit).
 
@@ -31,7 +31,7 @@ Live Event Updates: real-time attendee counts and live streaming metadata.
 
 In-app notifications (SignalR + persisted Notification table).
 
-Push notifications — Web Push (VAPID) + Mobile Push via Azure Notification Hubs (if mobile apps exist).
+Push notifications � Web Push (VAPID) + Mobile Push via Azure Notification Hubs (if mobile apps exist).
 
 Email digests and transactional emails (SendGrid / MailKit).
 
@@ -65,7 +65,7 @@ Smart recommendations: recommend cars, posts, or events based on collaborative f
 
 Parts & accessories listings, buy/sell workflow, escrow integration.
 
-Premium subscriptions (monthly) — advanced features: 3D viewer, larger uploads, analytics for posts.
+Premium subscriptions (monthly) � advanced features: 3D viewer, larger uploads, analytics for posts.
 
 1.8 Community & Moderation
 
@@ -92,11 +92,11 @@ REST API for core CRUD and server-side actions.
 
 SignalR (WebSockets + fallbacks) for real-time updates.
 
-Message broker (optional) — Azure Service Bus or RabbitMQ for async background processing (image recognition jobs, notifications, emails).
+Message broker (optional) � Azure Service Bus or RabbitMQ for async background processing (image recognition jobs, notifications, emails).
 
 2.2 Storage & Media
 
-Relational DB: SQL Server — user, car, post, event, notification tables.
+Relational DB: SQL Server � user, car, post, event, notification tables.
 
 Blob Storage: Azure Blob (images, glb models, videos). Use signed URLs for secure uploads/downloads (SAS tokens).
 
@@ -104,13 +104,13 @@ Search index: Azure Cognitive Search or Elastic for full-text search and filters
 
 2.3 AI Integration
 
-Option A — Managed (recommended): Azure Custom Vision / Cognitive Services for image tagging.
+Option A � Managed (recommended): Azure Custom Vision / Cognitive Services for image tagging.
 
 Pros: fully managed, scalable, predictable costs, integrates with Azure AD.
 
 Pattern: Upload image -> enqueue prediction job -> worker calls Custom Vision -> persist tags.
 
-Option B — Self-hosted: TensorFlow / PyTorch model served with Triton or TF Serving.
+Option B � Self-hosted: TensorFlow / PyTorch model served with Triton or TF Serving.
 
 Pros: full control, cheaper at scale; Cons: ops burden.
 
@@ -199,7 +199,7 @@ POST /api/ai/recognize  -- internal or worker endpoint
   "data": { "postId": "guid", "likedBy": "userId" },
   "createdAt": "2025-11-01T10:00:00Z"
 }
-4.3 SignalR Hub (C#) — simplified
+4.3 SignalR Hub (C#) � simplified
 public class CommunityHub : Hub
 {
     public async Task SubscribeToFeed(string category)
@@ -323,19 +323,19 @@ Security scans: SAST (GitHub CodeQL), dependency scanning.
 
 11. Release & Production Readiness Checklist
 
-✅ Secrets in Key Vault
+? Secrets in Key Vault
 
-✅ HTTPS enforced + HSTS
+? HTTPS enforced + HSTS
 
-✅ WAF (Front Door / App Gateway)
+? WAF (Front Door / App Gateway)
 
-✅ Backup/point-in-time for SQL
+? Backup/point-in-time for SQL
 
-✅ Blob lifecycle rules (cold storage)
+? Blob lifecycle rules (cold storage)
 
-✅ Deployment slots for zero-downtime deploys
+? Deployment slots for zero-downtime deploys
 
-✅ Monitoring & PagerDuty escalation
+? Monitoring & PagerDuty escalation
 
 12. Acceptance Criteria (sample)
 
@@ -343,7 +343,7 @@ Real-time Feed: when user A posts in category X, subscribers to category X recei
 
 Image Tagging: uploaded images receive at least one tag from model; tags are visible on post me
 
-Done — I created a full, production-grade Feature Roadmap & Project Scope document for AutoSphere (ASP.NET Core Web API + Angular).
+Done � I created a full, production-grade Feature Roadmap & Project Scope document for AutoSphere (ASP.NET Core Web API + Angular).
 
 What I included:
 
@@ -355,11 +355,11 @@ Data model samples, REST + SignalR contracts, and Angular client sketches.
 
 CI/CD, observability, testing matrix, and production checklist.
 
-Acceptance criteria and deliverable phases (foundation → realtime → media/AI → monetization).
+Acceptance criteria and deliverable phases (foundation ? realtime ? media/AI ? monetization).
 
 Next steps I can deliver immediately (pick one):
 
-Prioritized backlog (epics → stories → tasks).
+Prioritized backlog (epics ? stories ? tasks).
 
 Starter repo scaffolding focused on Real-time + Notifications (API + Angular + SignalR).
 
