@@ -1,0 +1,73 @@
+Current State: The repo is backend-heavy (ASP.NET Core Clean Architecture with layers: Api, Application, Domain, Infrastructure, Shared). It includes features for User Management, Cars, Customers, Events, Posts, JWT Auth, MediatR/CQRS, etc.
+Frontend: No dedicated frontend/ folder or Angular code yet (docs mention Angular 17+ with Tailwind, RxJS, NgRx/Signals, but it's planned/not present). The root has .github, docs (00-overview.md etc.), and the CarCommunity/ solution folder.
+Goal Alignment: Perfect match for a large-scale Angular frontend — add it as a sibling folder (frontend/) for full-stack separation. This keeps backend API clean and allows independent frontend scaling (lazy loading, state management, etc.).
+
+Recommended Monorepo Root Update:
+textCarCommunity/
+├── frontend/                 # ← New Angular app (your focus)
+├── CarCommunity/             # Existing .NET solution
+├── docs/                     # Keep existing MDs + add frontend-specific
+├── .github/
+├── README.md
+└── ... (docker-compose, etc.)
+
+MD Prompt Files for Your Agent
+Save these as separate .md files and feed them to your coding agent (or me) sequentially.
+1. 01-create-frontend-angular.md (Initial Setup)
+MarkdownYou are an expert Angular architect for large-scale apps. 
+
+Add a new **frontend/** folder to the CarCommunity repo[](https://github.com/Mostafa-SAID7/CarCommunity) as a standalone Angular 17+ (or latest) application.
+
+**Project Goals** (from repo docs):
+- Car Enthusiast Platform (AutoSphere)
+- Features: User auth/profiles, Car management (CRUD, gallery), Community posts/events, Marketplace elements, Real-time (SignalR ready), 3D car views potential.
+- Tech: Angular 17+, TailwindCSS, RxJS, Signals/NgRx, responsive design.
+
+**Exact Folder Structure** to create (scalable feature-based):
+[PASTE THE FULL STRUCTURE FROM MY PREVIOUS RESPONSE, adjusted for /frontend/src/app/]
+
+Commands to run:
+- ng new frontend --standalone --routing --style=scss --skip-git
+- cd frontend && ng add @angular/material (optional) or Tailwind setup.
+- Configure proxy.conf.json for backend API (http://localhost:5001 or similar).
+
+Deliverables:
+1. Full updated repo tree showing frontend/.
+2. Key files: app.config.ts, app.routes.ts, tailwind.config, environment files.
+3. README.md in frontend/ with dev commands.
+4. Basic integration with existing backend (Auth, Cars endpoints).
+2. 02-frontend-structure-migration.md (If partial frontend exists)
+MarkdownReview the CarCommunity repo (especially any Angular mentions in docs/03-frontend-angular.md).
+
+Refactor or create the frontend/ Angular app to match this large-scale structure:
+
+[PASTE STRUCTURE]
+
+Ensure:
+- Lazy-loaded features for Cars, Community, Events, Users, Admin.
+- Core module/services for Auth (JWT interceptor), API base URL from env.
+- Shared UI components (CarCard, PostCard, etc.).
+- State: Use Signals + optional NgRx for complex features.
+- Connect to backend endpoints (e.g., /api/cars, /api/auth).
+
+Output: Step-by-step migration plan + code for initial features (Auth + Cars).
+3. 03-implement-key-features.md
+MarkdownImplement in frontend/ (Angular):
+
+1. **Auth Feature** — Login/Register + JWT guard + profile.
+2. **Cars Feature** — List, Detail, Create (with image upload/gallery), aligned to backend DTOs.
+3. **Community/Posts** — Feed, create post, comments.
+4. **Layouts** — Main layout with sidebar (cars, events, community).
+
+Use the scalable structure. Make components standalone. Add basic Tailwind styling. Prepare for SignalR real-time posts/events.
+
+Provide component code, routes, services, and models matching backend entities.
+4. 04-frontend-docs-update.md
+MarkdownUpdate/create docs/03-frontend-angular.md with:
+- Detailed frontend architecture explanation.
+- Folder structure diagram.
+- How to run frontend alongside backend.
+- State management strategy.
+- Deployment notes (Azure Static Web Apps).
+
+Ensure consistency with existing docs (Clean Architecture backend integration).
