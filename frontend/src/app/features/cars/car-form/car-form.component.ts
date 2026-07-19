@@ -9,54 +9,79 @@ import { Car } from '../../../core/models/car.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <!-- Backdrop -->
-    <div class="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
-         (click)="cancelled.emit()">
-      <div class="card w-full max-w-lg" (click)="$event.stopPropagation()">
-        <div class="p-6">
-          <h2 class="text-lg font-bold text-gray-900 mb-5">
-            {{ car ? 'Edit Car' : 'Add New Car' }}
-          </h2>
+    <div class="modal-overlay" (click)="cancelled.emit()">
+      <div class="modal" (click)="$event.stopPropagation()">
 
-          <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="form-label">Make</label>
-                <input formControlName="make" class="form-input" placeholder="Toyota">
-              </div>
-              <div>
-                <label class="form-label">Model</label>
-                <input formControlName="model" class="form-input" placeholder="Supra">
-              </div>
-            </div>
-
-            <div>
-              <label class="form-label">Year</label>
-              <input formControlName="year" type="number" class="form-input" placeholder="2024">
-            </div>
-
-            <div>
-              <label class="form-label">Description</label>
-              <textarea formControlName="description" rows="3" class="form-input resize-none"
-                        placeholder="Describe the car..."></textarea>
-            </div>
-
-            <div>
-              <label class="form-label">Image URL</label>
-              <input formControlName="imageUrl" class="form-input" placeholder="https://...">
-            </div>
-
-            <div class="flex gap-3 pt-2">
-              <button type="submit" class="btn-primary flex-1" [disabled]="saving()">
-                {{ saving() ? 'Saving…' : 'Save' }}
-              </button>
-              <button type="button" class="btn-secondary flex-1" (click)="cancelled.emit()">Cancel</button>
-            </div>
-          </form>
+        <div class="modal-header">
+          <div>
+            <h2 class="text-base font-black text-ghost">{{ car ? 'Edit Car' : 'Add New Car' }}</h2>
+            <p class="text-xs text-fog mt-0.5">{{ car ? 'Update vehicle details' : 'Register a new vehicle' }}</p>
+          </div>
+          <button (click)="cancelled.emit()" class="btn-icon">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
         </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="field">
+              <label class="label">Make</label>
+              <input formControlName="make" class="input"
+                     [class.input-error]="form.get('make')?.invalid && form.get('make')?.touched"
+                     placeholder="Toyota">
+              @if (form.get('make')?.invalid && form.get('make')?.touched) {
+                <span class="field-error">Required</span>
+              }
+            </div>
+            <div class="field">
+              <label class="label">Model</label>
+              <input formControlName="model" class="input"
+                     [class.input-error]="form.get('model')?.invalid && form.get('model')?.touched"
+                     placeholder="Supra">
+              @if (form.get('model')?.invalid && form.get('model')?.touched) {
+                <span class="field-error">Required</span>
+              }
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Year</label>
+            <input formControlName="year" type="number" class="input"
+                   [class.input-error]="form.get('year')?.invalid && form.get('year')?.touched"
+                   placeholder="2024">
+            @if (form.get('year')?.invalid && form.get('year')?.touched) {
+              <span class="field-error">Enter a valid year (1900+)</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label">Description</label>
+            <textarea formControlName="description" rows="3" class="input"
+                      placeholder="Describe the car — mods, condition, story…"></textarea>
+          </div>
+
+          <div class="field">
+            <label class="label">Image URL</label>
+            <input formControlName="imageUrl" class="input" placeholder="https://…">
+          </div>
+
+          <div class="modal-footer px-0 pb-0 pt-2">
+            <button type="submit" class="btn-primary flex-1 h-11" [disabled]="saving()">
+              @if (saving()) {
+                <div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                Saving…
+              } @else {
+                {{ car ? 'Update Car' : 'Add Car' }}
+              }
+            </button>
+            <button type="button" class="btn-secondary flex-1 h-11" (click)="cancelled.emit()">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
-  `
+  `,
 })
 export class CarFormComponent implements OnInit {
   @Input() car: Car | null = null;
@@ -75,9 +100,7 @@ export class CarFormComponent implements OnInit {
     imageUrl:    [''],
   });
 
-  ngOnInit(): void {
-    if (this.car) this.form.patchValue(this.car as any);
-  }
+  ngOnInit(): void { if (this.car) this.form.patchValue(this.car as any); }
 
   submit(): void {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }

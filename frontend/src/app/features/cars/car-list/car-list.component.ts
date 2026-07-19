@@ -1,6 +1,5 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { CarService } from '../../../core/services/car.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { Car } from '../../../core/models/car.model';
@@ -11,16 +10,26 @@ import { CarFormComponent } from '../car-form/car-form.component';
 @Component({
   selector: 'app-car-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, CarCardComponent, SpinnerComponent, CarFormComponent],
+  imports: [CommonModule, CarCardComponent, SpinnerComponent, CarFormComponent],
   template: `
-    <div>
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-6">
+    <div class="animate-fade-in">
+      <!-- Page header -->
+      <div class="page-header">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Cars</h1>
-          <p class="text-sm text-gray-500 mt-0.5">{{ cars().length }} vehicles registered</p>
+          <h1 class="page-title">
+            <span class="text-ghost">Car</span>
+            <span class="text-crimson-500 ml-2">Garage</span>
+          </h1>
+          <p class="page-subtitle">
+            {{ loading() ? '—' : cars().length }} vehicles registered
+          </p>
         </div>
-        <button class="btn-primary" (click)="openForm()">+ Add Car</button>
+        <button class="btn-primary" (click)="openForm()">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Car
+        </button>
       </div>
 
       <!-- Loading -->
@@ -29,7 +38,7 @@ import { CarFormComponent } from '../car-form/car-form.component';
       <!-- Grid -->
       @if (!loading()) {
         @if (cars().length > 0) {
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div class="grid-cards">
             @for (car of cars(); track car.id) {
               <app-car-card [car]="car"
                 (edit)="openForm($event)"
@@ -37,22 +46,35 @@ import { CarFormComponent } from '../car-form/car-form.component';
             }
           </div>
         } @else {
-          <div class="text-center py-20 text-gray-400">
-            <div class="text-5xl mb-4">🚗</div>
-            <p class="font-medium">No cars yet</p>
-            <p class="text-sm mt-1">Add your first vehicle to get started.</p>
+          <div class="empty-state">
+            <div class="w-20 h-20 rounded-2xl bg-crimson-900/20 border border-crimson-800/30
+                        flex items-center justify-center mb-5">
+              <svg class="w-10 h-10 text-crimson-700" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2 2h8zM13 6l2.5 5H20l1 4v1h-2"/>
+              </svg>
+            </div>
+            <p class="empty-title">No cars yet</p>
+            <p class="empty-body">Add your first vehicle to fill the garage.</p>
+            <button class="btn-primary mt-5" (click)="openForm()">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Add First Car
+            </button>
           </div>
         }
       }
 
-      <!-- Form modal -->
       @if (showForm()) {
         <app-car-form [car]="selectedCar()"
           (saved)="onSaved()"
           (cancelled)="showForm.set(false)" />
       }
     </div>
-  `
+  `,
 })
 export class CarListComponent implements OnInit {
   private carSvc = inject(CarService);
@@ -68,21 +90,14 @@ export class CarListComponent implements OnInit {
   load(): void {
     this.loading.set(true);
     this.carSvc.getAll().subscribe({
-      next: data => { this.cars.set(data); this.loading.set(false); },
+      next:  data => { this.cars.set(data); this.loading.set(false); },
       error: ()   => this.loading.set(false),
     });
   }
 
-  openForm(car: Car | null = null): void {
-    this.selectedCar.set(car);
-    this.showForm.set(true);
-  }
+  openForm(car: Car | null = null): void { this.selectedCar.set(car); this.showForm.set(true); }
 
-  onSaved(): void {
-    this.showForm.set(false);
-    this.load();
-    this.toast.success('Car saved successfully.');
-  }
+  onSaved(): void { this.showForm.set(false); this.load(); this.toast.success('Car saved successfully.'); }
 
   onDelete(id: string): void {
     if (!confirm('Delete this car?')) return;

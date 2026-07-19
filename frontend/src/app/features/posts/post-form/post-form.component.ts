@@ -9,38 +9,62 @@ import { Post } from '../../../core/models/post.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
-         (click)="cancelled.emit()">
-      <div class="card w-full max-w-lg" (click)="$event.stopPropagation()">
-        <div class="p-6">
-          <h2 class="text-lg font-bold text-gray-900 mb-5">
-            {{ post ? 'Edit Post' : 'New Post' }}
-          </h2>
-          <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
-            <div>
-              <label class="form-label">Title</label>
-              <input formControlName="title" class="form-input" placeholder="Post title">
-            </div>
-            <div>
-              <label class="form-label">Content</label>
-              <textarea formControlName="content" rows="5" class="form-input resize-none"
-                        placeholder="What's on your mind?"></textarea>
-            </div>
-            <div>
-              <label class="form-label">Image URL (optional)</label>
-              <input formControlName="imageUrl" class="form-input" placeholder="https://...">
-            </div>
-            <div class="flex gap-3 pt-2">
-              <button type="submit" class="btn-primary flex-1" [disabled]="saving()">
-                {{ saving() ? 'Saving…' : 'Post' }}
-              </button>
-              <button type="button" class="btn-secondary flex-1" (click)="cancelled.emit()">Cancel</button>
-            </div>
-          </form>
+    <div class="modal-overlay" (click)="cancelled.emit()">
+      <div class="modal" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+          <div>
+            <h2 class="text-base font-black text-ghost">{{ post ? 'Edit Post' : 'New Post' }}</h2>
+            <p class="text-xs text-fog mt-0.5">{{ post ? 'Update your post' : 'Share something with the community' }}</p>
+          </div>
+          <button (click)="cancelled.emit()" class="btn-icon">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
         </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body space-y-4">
+          <div class="field">
+            <label class="label">Title</label>
+            <input formControlName="title" class="input"
+                   [class.input-error]="form.get('title')?.invalid && form.get('title')?.touched"
+                   placeholder="What's the headline?">
+            @if (form.get('title')?.invalid && form.get('title')?.touched) {
+              <span class="field-error">Title is required.</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label">Content</label>
+            <textarea formControlName="content" rows="5" class="input"
+                      [class.input-error]="form.get('content')?.invalid && form.get('content')?.touched"
+                      placeholder="Tell the community your story…"></textarea>
+            @if (form.get('content')?.invalid && form.get('content')?.touched) {
+              <span class="field-error">Content is required.</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label">Image URL <span class="normal-case font-normal text-fog">(optional)</span></label>
+            <input formControlName="imageUrl" class="input" placeholder="https://…">
+          </div>
+
+          <div class="modal-footer px-0 pb-0 pt-2">
+            <button type="submit" class="btn-primary flex-1 h-11" [disabled]="saving()">
+              @if (saving()) {
+                <div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                Posting…
+              } @else {
+                {{ post ? 'Update Post' : 'Publish Post' }}
+              }
+            </button>
+            <button type="button" class="btn-secondary flex-1 h-11" (click)="cancelled.emit()">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
-  `
+  `,
 })
 export class PostFormComponent implements OnInit {
   @Input() post: Post | null = null;

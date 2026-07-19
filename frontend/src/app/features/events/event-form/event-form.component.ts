@@ -9,44 +9,73 @@ import { CarEvent } from '../../../core/models/event.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
-         (click)="cancelled.emit()">
-      <div class="card w-full max-w-lg" (click)="$event.stopPropagation()">
-        <div class="p-6">
-          <h2 class="text-lg font-bold text-gray-900 mb-5">
-            {{ event ? 'Edit Event' : 'Add Event' }}
-          </h2>
-          <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
-            <div>
-              <label class="form-label">Event Name</label>
-              <input formControlName="name" class="form-input" placeholder="Summer Car Show">
-            </div>
-            <div>
-              <label class="form-label">Description</label>
-              <textarea formControlName="description" rows="3" class="form-input resize-none"
-                        placeholder="What's this event about?"></textarea>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="form-label">Date</label>
-                <input formControlName="eventDate" type="date" class="form-input">
-              </div>
-              <div>
-                <label class="form-label">Location</label>
-                <input formControlName="location" class="form-input" placeholder="City, Venue">
-              </div>
-            </div>
-            <div class="flex gap-3 pt-2">
-              <button type="submit" class="btn-primary flex-1" [disabled]="saving()">
-                {{ saving() ? 'Saving…' : 'Save' }}
-              </button>
-              <button type="button" class="btn-secondary flex-1" (click)="cancelled.emit()">Cancel</button>
-            </div>
-          </form>
+    <div class="modal-overlay" (click)="cancelled.emit()">
+      <div class="modal" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+          <div>
+            <h2 class="text-base font-black text-ghost">{{ event ? 'Edit Event' : 'New Event' }}</h2>
+            <p class="text-xs text-fog mt-0.5">{{ event ? 'Update event details' : 'Schedule a new car meet or show' }}</p>
+          </div>
+          <button (click)="cancelled.emit()" class="btn-icon">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
         </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" class="modal-body space-y-4">
+          <div class="field">
+            <label class="label">Event name</label>
+            <input formControlName="name" class="input"
+                   [class.input-error]="form.get('name')?.invalid && form.get('name')?.touched"
+                   placeholder="Summer Car Show 2025">
+            @if (form.get('name')?.invalid && form.get('name')?.touched) {
+              <span class="field-error">Event name is required.</span>
+            }
+          </div>
+
+          <div class="field">
+            <label class="label">Description</label>
+            <textarea formControlName="description" rows="3" class="input"
+                      placeholder="What's happening at this event?"></textarea>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="field">
+              <label class="label">Date</label>
+              <input formControlName="eventDate" type="date" class="input"
+                     [class.input-error]="form.get('eventDate')?.invalid && form.get('eventDate')?.touched">
+              @if (form.get('eventDate')?.invalid && form.get('eventDate')?.touched) {
+                <span class="field-error">Date required.</span>
+              }
+            </div>
+            <div class="field">
+              <label class="label">Location</label>
+              <input formControlName="location" class="input"
+                     [class.input-error]="form.get('location')?.invalid && form.get('location')?.touched"
+                     placeholder="City, Venue">
+              @if (form.get('location')?.invalid && form.get('location')?.touched) {
+                <span class="field-error">Location required.</span>
+              }
+            </div>
+          </div>
+
+          <div class="modal-footer px-0 pb-0 pt-2">
+            <button type="submit" class="btn-primary flex-1 h-11" [disabled]="saving()">
+              @if (saving()) {
+                <div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                Saving…
+              } @else {
+                {{ event ? 'Update Event' : 'Create Event' }}
+              }
+            </button>
+            <button type="button" class="btn-secondary flex-1 h-11" (click)="cancelled.emit()">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
-  `
+  `,
 })
 export class EventFormComponent implements OnInit {
   @Input() event: CarEvent | null = null;
@@ -65,12 +94,7 @@ export class EventFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if (this.event) {
-      this.form.patchValue({
-        ...this.event,
-        eventDate: this.event.eventDate?.slice(0, 10),
-      });
-    }
+    if (this.event) this.form.patchValue({ ...this.event, eventDate: this.event.eventDate?.slice(0, 10) });
   }
 
   submit(): void {

@@ -1,0 +1,27 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "--- title: AutoSphere Documentation description: Central documentation index for AutoSphere Car Community Platform. ---",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samir3said66-prog/CarCommunity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/samir3said66-prog/CarCommunity/issues"
+  },
+  "homepage": "https://github.com/samir3said66-prog/CarCommunity#readme",
+  "dependencies": {
+    "lucide-angular": "^1.0.0"
+  }
+}
