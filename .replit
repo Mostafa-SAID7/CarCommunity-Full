@@ -1,7 +1,35 @@
-modules = ["dotnet-7.0"]
+modules = ["dotnet-7.0", "nodejs-24"]
 
 [nix]
 channel = "stable-25_05"
 
 [agent]
 expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && npm start -- --port 4200 --host 0.0.0.0 --disable-host-check"
+waitForPort = 4200
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 4200
+externalPort = 80

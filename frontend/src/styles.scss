@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  * { box-sizing: border-box; }
+  body {
+    @apply font-sans bg-gray-50 text-gray-900 antialiased;
+    margin: 0;
+  }
+  h1 { @apply text-3xl font-bold; }
+  h2 { @apply text-2xl font-bold; }
+  h3 { @apply text-xl font-semibold; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white
+           rounded-lg font-medium text-sm hover:bg-primary-700 focus:outline-none
+           focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+           transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 bg-white text-gray-700
+           border border-gray-300 rounded-lg font-medium text-sm hover:bg-gray-50
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2
+           transition-colors duration-200;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white
+           rounded-lg font-medium text-sm hover:bg-red-700 focus:outline-none
+           focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-200;
+  }
+  .form-input {
+    @apply block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+           placeholder-gray-400 focus:border-primary-500 focus:outline-none
+           focus:ring-1 focus:ring-primary-500 transition-colors duration-200;
+  }
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-primary { @apply badge bg-primary-100 text-primary-800; }
+  .badge-gray    { @apply badge bg-gray-100 text-gray-800; }
+}
