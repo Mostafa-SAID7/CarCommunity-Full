@@ -39,9 +39,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
-      - run: dotnet restore CarCommunity/CarCommunity.csproj
-      - run: dotnet build CarCommunity/CarCommunity.csproj --no-restore --configuration Release
-      - run: dotnet test CarCommunity/CarCommunity.csproj --no-build --configuration Release --verbosity normal
+      - run: dotnet restore CarCommunity/CarCommunity.Api/CarCommunity.Api.csproj
+      - run: dotnet build CarCommunity/CarCommunity.Api/CarCommunity.Api.csproj --no-restore --configuration Release
+      - run: dotnet test CarCommunity/CarCommunity.Api/CarCommunity.Api.csproj --no-build --configuration Release --verbosity normal
 
   deploy-preview:
     name: Vercel preview configuration

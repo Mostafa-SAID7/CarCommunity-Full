@@ -43,8 +43,15 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         run: npm install --no-audit --no-fund && npm run build -- --configuration production
+      - name: Package frontend artifact
+        run: tar -czf "frontend-dist-${{ steps.version.outputs.version }}.tar.gz" -C frontend/dist frontend
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
-        run: gh release create "v$VERSION" frontend/dist/** --title "v$VERSION" --generate-notes
+        run: |
+          if gh release view "v$VERSION" >/dev/null 2>&1; then
+            echo "Release v$VERSION already exists; skipping."
+          else
+            gh release create "v$VERSION" "frontend-dist-$VERSION.tar.gz" --title "v$VERSION" --generate-notes
+          fi
