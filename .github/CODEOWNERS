@@ -1,0 +1,6 @@
+# Protect automation and deployment configuration.
+* @Mostafa-SAID7
+.github/ @Mostafa-SAID7
+vercel.json @Mostafa-SAID7
+frontend/package.json @Mostafa-SAID7
+frontend/package-lock.json @Mostafa-SAID7

@@ -5,7 +5,25 @@
 ###
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: npm
+    directory: /frontend
     schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      angular:
+        patterns:
+          - "@angular/*"
+          - "@angular-devkit/*"
+      frontend-production:
+        dependency-type: production
+        update-types: ["minor", "patch"]
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      dotnet:
+        patterns:
+          - "*"
