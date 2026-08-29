@@ -42,7 +42,7 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Build frontend
         working-directory: frontend
-        run: npm ci && npm run build -- --configuration production
+        run: npm install --no-audit --no-fund && npm run build -- --configuration production
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
