@@ -49,4 +49,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
-        run: gh release create "v$VERSION" "frontend-dist-$VERSION.tar.gz" --title "v$VERSION" --generate-notes
+        run: |
+          if gh release view "v$VERSION" >/dev/null 2>&1; then
+            echo "Release v$VERSION already exists; skipping."
+          else
+            gh release create "v$VERSION" "frontend-dist-$VERSION.tar.gz" --title "v$VERSION" --generate-notes
+          fi
